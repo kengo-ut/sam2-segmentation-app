@@ -1,1 +1,1 @@
-from .health import HealthStatus, HealthVariables
+from .video import VideoInfo, VideoName

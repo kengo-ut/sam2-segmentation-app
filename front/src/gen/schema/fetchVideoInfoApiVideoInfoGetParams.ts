@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type ValidationErrorLocItem = string | number;
+export type FetchVideoInfoApiVideoInfoGetParams = {
+  dirname: string;
+};

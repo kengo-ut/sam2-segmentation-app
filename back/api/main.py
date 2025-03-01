@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from router import router
 
-from api.router import health_router
+app = FastAPI(
+    title="SAM2 Segmentation API",
+    description="SAM2を用いたセグメンテーションを行うAPI",
+    version="1.0.0",
+)
 
-app = FastAPI()
-
-app.include_router(health_router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,3 +19,5 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["Content-Disposition"],
 )
+
+app.include_router(router, prefix="/api")
