@@ -50,6 +50,7 @@ SAM2-SEGMENTER は、SAM2（セグメンテーション手法）を活用した�
 
 4. `back`ディレクトリで以下のコマンドを実行し、開発サーバーを立ち上げる
    ```bash
+   . .venv/bin/activate
    make dev
    ```
 

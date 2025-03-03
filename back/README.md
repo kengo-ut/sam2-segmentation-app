@@ -28,6 +28,7 @@ export PUBLIC_DIR=/xxx/sam2-segmentation-app/front/public
 ### 開発サーバーの立ち上げ
 
 ```bash
+. .venv/bin/activate
 make dev
 ```
 
