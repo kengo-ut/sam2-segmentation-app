@@ -4,6 +4,10 @@ Next.js によるフロントエンド開発のためのテンプレートです
 
 ## 環境構築
 
+### データの配置
+
+- `/front/public/videos`配下にmp4ファイルを配置する
+
 ### パッケージマネージャーのインストール
 
 - [Volta](https://volta.sh/) を使用して Node.js と Yarn のバージョンを管理する
@@ -58,6 +62,10 @@ yarn gen
 ### 環境変数
 
 - 必要な環境変数を`.env.local`に記載する
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+```
 
 ### 開発サーバーの立ち上げ
 

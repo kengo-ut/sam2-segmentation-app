@@ -6,8 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface VideoInfo {
-  width: number;
-  height: number;
-  num_frames: number;
-}
+export type ExportVideoApiSegmentationExportPostParams = {
+  filename: string;
+};

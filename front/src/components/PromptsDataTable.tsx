@@ -1,5 +1,5 @@
 import React from "react";
-import { Download, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,32 +12,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Point } from "@/types";
+import { Prompt } from "@/gen/schema";
 
-const PointsDataTable = ({
-  points,
+const PromptsDataTable = ({
+  prompts,
   currentFrame,
   requestedWidth,
   requestedHeight,
-  exportPoints,
-  handlePointClick,
+  handlePromptClick,
 }: {
-  points: Point[];
+  prompts: Prompt[];
   currentFrame: number;
   requestedWidth: number;
   requestedHeight: number;
-  exportPoints: () => void;
-  handlePointClick: (index: number) => (e: React.MouseEvent) => void;
+  handlePromptClick: (index: number) => (e: React.MouseEvent) => void;
 }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg flex justify-between">
-          <span>Coordinates</span>
-          <Button onClick={exportPoints} variant="outline" size="sm">
-            <Download /> Export
-          </Button>
-        </CardTitle>
+        <CardTitle className="text-lg">Coordinates</CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-64 rounded-md border">
@@ -45,6 +38,7 @@ const PointsDataTable = ({
             <TableHeader>
               <TableRow>
                 <TableHead>Frame</TableHead>
+                <TableHead>Object ID</TableHead>
                 <TableHead>X</TableHead>
                 <TableHead>Y</TableHead>
                 <TableHead>Type</TableHead>
@@ -52,28 +46,29 @@ const PointsDataTable = ({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {points.length === 0 ? (
+              {prompts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground">
+                  <TableCell colSpan={6} className="text-center text-muted-foreground">
                     No points added yet. Click on the image to add points.
                   </TableCell>
                 </TableRow>
               ) : (
-                points.map((point, index) => (
+                prompts.map((prompt, index) => (
                   <TableRow
                     key={index}
-                    className={point.frameIndex === currentFrame ? "bg-accent/50" : ""}
+                    className={prompt.frame_idx === currentFrame ? "bg-accent/50" : ""}
                   >
-                    <TableCell>{point.frameIndex}</TableCell>
-                    <TableCell>{(point.x * requestedWidth).toFixed(0)}</TableCell>
-                    <TableCell>{(point.y * requestedHeight).toFixed(0)}</TableCell>
+                    <TableCell>{prompt.frame_idx}</TableCell>
+                    <TableCell>{prompt.obj_id}</TableCell>
+                    <TableCell>{(prompt.point.x * requestedWidth).toFixed(0)}</TableCell>
+                    <TableCell>{(prompt.point.y * requestedHeight).toFixed(0)}</TableCell>
                     <TableCell>
-                      <Badge variant={point.label === 1 ? "default" : "destructive"}>
-                        {point.label === 1 ? "Positive" : "Negative"}
+                      <Badge variant={prompt.label === 1 ? "default" : "destructive"}>
+                        {prompt.label === 1 ? "Positive" : "Negative"}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="icon" onClick={handlePointClick(index)}>
+                      <Button variant="ghost" size="icon" onClick={handlePromptClick(index)}>
                         <Trash2 />
                       </Button>
                     </TableCell>
@@ -85,13 +80,13 @@ const PointsDataTable = ({
         </ScrollArea>
       </CardContent>
       <CardFooter className="flex justify-between border-t px-6 py-3">
-        <div className="text-sm text-muted-foreground">Total points: {points.length}</div>
+        <div className="text-sm text-muted-foreground">Total points: {prompts.length}</div>
         <div className="text-sm text-muted-foreground">
-          Current frame: {points.filter((p) => p.frameIndex === currentFrame).length} points
+          Current frame: {prompts.filter((p) => p.frame_idx === currentFrame).length} points
         </div>
       </CardFooter>
     </Card>
   );
 };
 
-export default PointsDataTable;
+export default PromptsDataTable;

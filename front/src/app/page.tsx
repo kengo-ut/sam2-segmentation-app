@@ -1,20 +1,20 @@
 "use client";
 
 import { useState, useRef } from "react";
-import VideoFrameViewer from "@/components/viewer/VideoFrameViewer";
+import VideoFrameViewer from "@/components/VideoFrameViewer";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Play } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { FetchVideoInfoApiVideoInfoGetParams, VideoInfo } from "@/gen/schema";
-import { fetchVideoInfoApiVideoInfoGet } from "@/gen/video/video";
+import { InitializeVideoApiSegmentationInitializePostParams, VideoInfo } from "@/gen/schema";
+import { initializeVideoApiSegmentationInitializePost } from "@/gen/segmentation/segmentation";
 
 export default function VideoAnnotationPage() {
-  const [directoryName, setDirectoryName] = useState("");
+  const [filename, setFilename] = useState("");
   const [isViewerActive, setIsViewerActive] = useState(false);
-  const [totalFrames, setTotalFrames] = useState(0);
+  const [numFrames, setNumFrames] = useState(0);
   const [requestedWidth, setRequestedWidth] = useState(640);
   const [requestedHeight, setRequestedHeight] = useState(360);
 
@@ -23,16 +23,15 @@ export default function VideoAnnotationPage() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (directoryName.trim()) {
-      const params: FetchVideoInfoApiVideoInfoGetParams = {
-        dirname: directoryName,
+    if (filename.trim()) {
+      const params: InitializeVideoApiSegmentationInitializePostParams = {
+        filename,
       };
-      const response = await fetchVideoInfoApiVideoInfoGet(params);
-      console.log(response);
+      const response = await initializeVideoApiSegmentationInitializePost(params);
       const videoInfo: VideoInfo = response.data;
-      setTotalFrames(videoInfo.total);
       setRequestedWidth(videoInfo.width);
       setRequestedHeight(videoInfo.height);
+      setNumFrames(videoInfo.num_frames);
       setIsViewerActive(true);
     }
   };
@@ -59,16 +58,16 @@ export default function VideoAnnotationPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="directoryName">Directory Name</Label>
+                <Label htmlFor="directoryName">Video Filename</Label>
                 <Input
-                  id="directoryName"
+                  id="filename"
                   placeholder="e.g. sample_video"
-                  value={directoryName}
-                  onChange={(e) => setDirectoryName(e.target.value)}
+                  value={filename}
+                  onChange={(e) => setFilename(e.target.value)}
                   required
                 />
                 <p className="text-sm text-muted-foreground">
-                  JPEG images should be stored in the public/[directoryName]/frames/ directory.
+                  Video file (.mp4) should be placed in the front/public/videos directory.
                 </p>
               </div>
             </form>
@@ -78,7 +77,7 @@ export default function VideoAnnotationPage() {
               type="submit"
               onClick={handleSubmit}
               className="gap-2"
-              disabled={!directoryName.trim()}
+              disabled={!filename.trim()}
             >
               <Play className="h-4 w-4" />
               Start Viewer
@@ -87,8 +86,8 @@ export default function VideoAnnotationPage() {
         </Card>
       ) : (
         <VideoFrameViewer
-          directoryName={directoryName}
-          totalFrames={totalFrames}
+          filename={filename}
+          numFrames={numFrames}
           requestedWidth={requestedWidth}
           requestedHeight={requestedHeight}
         />

@@ -7,7 +7,7 @@ _black_check:
 	uv run black --check ./
 
 _mypy:
-	uv run mypy --ignore-missing-imports ./
+	uv run mypy --ignore-missing-imports ./api
 
 lint:
 	make -j _isort_check _black_check _mypy
@@ -25,4 +25,4 @@ test:
 	uv run pytest
 
 dev:
-	uv run uvicorn api.main:app --reload
+	uv run uvicorn main:app --reload

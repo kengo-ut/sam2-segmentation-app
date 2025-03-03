@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from .video import router as video_router
+from .segmentation import router as segmentation_router
 
 router = APIRouter()
-router.include_router(video_router)
+router.include_router(segmentation_router)
 
 __all__ = ["router"]

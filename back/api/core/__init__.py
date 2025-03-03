@@ -1,1 +1,1 @@
-from .video_processing import get_video_info
+from .utils import apply_mask_pil

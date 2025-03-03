@@ -6,6 +6,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type FetchVideoInfoApiVideoInfoGetParams = {
-  dirname: string;
-};
+export interface Point {
+  x: number;
+  y: number;
+}

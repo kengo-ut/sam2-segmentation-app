@@ -6,8 +6,8 @@ export interface Point {
 }
 
 export interface VideoFrameViewerProps {
-  directoryName: string;
-  totalFrames: number;
+  filename: string;
+  numFrames: number;
   requestedWidth: number;
   requestedHeight: number;
 }

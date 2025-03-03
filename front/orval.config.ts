@@ -12,14 +12,14 @@ module.exports = {
     hooks: {
       // orval の生成後に実行されるフック
       afterAllFilesWrite: () => {
-        const defaultTsPath = path.resolve(__dirname, "src/gen/video/video.ts");
+        const defaultTsPath = path.resolve(__dirname, "src/gen/segmentation/segmentation.ts");
 
         if (fs.existsSync(defaultTsPath)) {
           fs.appendFileSync(
             defaultTsPath,
             `axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;\n`
           );
-          console.log("✅ axios.defaults.baseURL を video.ts に追加しました！");
+          console.log("✅ axios.defaults.baseURL を segmentation.ts に追加しました！");
         }
       },
     },

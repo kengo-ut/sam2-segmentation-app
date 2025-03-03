@@ -5,9 +5,11 @@
  * SAM2を用いたセグメンテーションを行うAPI
  * OpenAPI spec version: 1.0.0
  */
+import type { Point } from "./point";
 
-export interface VideoInfo {
-  width: number;
-  height: number;
-  num_frames: number;
+export interface Prompt {
+  point: Point;
+  label: number;
+  frame_idx: number;
+  obj_id: number;
 }
