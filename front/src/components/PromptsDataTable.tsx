@@ -30,7 +30,7 @@ const PromptsDataTable = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Coordinates</CardTitle>
+        <CardTitle className="text-lg">Prompts</CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-64 rounded-md border">
