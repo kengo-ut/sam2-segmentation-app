@@ -26,7 +26,7 @@ const DataAndStatsTabPanel: React.FC<DataAndStatsTabPanelProps> = ({
   return (
     <Tabs defaultValue="data" className="flex flex-col gap-1">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="data">Point Data</TabsTrigger>
+        <TabsTrigger value="data">Prompt Data</TabsTrigger>
         <TabsTrigger value="stats">Statistics</TabsTrigger>
       </TabsList>
 
