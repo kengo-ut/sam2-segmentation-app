@@ -95,3 +95,9 @@ SAM2-SEGMENTER は、SAM2（セグメンテーション手法）を活用した�
     ```
 
 11. [http://localhost:3000](http://localhost:3000)へアクセスしてページが表示されれば OK
+
+## TODOs
+
+- [ ] Implementation for MPS (CPU) Devices (Currently only supports CUDA)
+- [ ] Clean the code further
+- [x] Both directions of prompt propagation

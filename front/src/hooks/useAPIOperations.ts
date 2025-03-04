@@ -16,12 +16,15 @@ export const useAPIOperations = (
   effect: keyof typeof PropagatePromptsApiSegmentationPropagatePostEffect,
   setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>,
   setImageVersion: React.Dispatch<React.SetStateAction<number>>,
-  setImageLoaded: React.Dispatch<React.SetStateAction<boolean>>
+  setImageLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+  setPrompts: React.Dispatch<React.SetStateAction<Prompt[]>>,
+  setCanPropagate: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const handleApplyPrompts = async () => {
     try {
       setIsProcessing(true);
       await applyPromptsApiSegmentationApplyPost(prompts);
+      setCanPropagate(true);
       // Increment image version to force re-render
       setImageVersion(Date.now());
       setImageLoaded(false);
@@ -39,6 +42,8 @@ export const useAPIOperations = (
         effect,
       };
       await propagatePromptsApiSegmentationPropagatePost(params);
+      setPrompts([]);
+      setCanPropagate(false);
       // Increment image version to force re-render
       setImageVersion(Date.now());
       setImageLoaded(false);
@@ -54,6 +59,7 @@ export const useAPIOperations = (
       try {
         setIsProcessing(true);
         await resetStateApiSegmentationResetPut();
+        setCanPropagate(false);
         // Increment image version to force re-render
         setImageVersion(Date.now());
         setImageLoaded(false);

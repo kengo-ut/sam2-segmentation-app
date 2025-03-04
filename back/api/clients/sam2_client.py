@@ -25,6 +25,7 @@ class SAM2Client:
         if self.device.type == "cuda":
             torch.backends.cuda.matmul.allow_tf32 = True
             torch.backends.cudnn.allow_tf32 = True
+            torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
 
         self.predictor = build_sam2_video_predictor(
             cfg_path, ckpt_path, device=str(self.device)
@@ -91,6 +92,7 @@ class SAM2Client:
 
     def reset_state(self):
         self.predictor.reset_state(self.inference_state)
+        shutil.rmtree(self.state_dir)
         shutil.copytree(self.raw_dir, self.state_dir, dirs_exist_ok=True)
 
     def apply_prompts(self, prompts: list[Prompt]):
@@ -131,15 +133,26 @@ class SAM2Client:
             ).save(self.state_dir / self.frame_names[frame_idx])
 
     def propagate_prompts(self, effect="color"):
-        video_segments = {
-            out_frame_idx: {
+        video_segments = {}
+        for (
+            out_frame_idx,
+            out_obj_ids,
+            out_mask_logits,
+        ) in self.predictor.propagate_in_video(self.inference_state, reverse=False):
+            video_segments[out_frame_idx] = {
                 out_obj_id: (out_mask_logits[i] > 0.0).cpu().numpy()
                 for i, out_obj_id in enumerate(out_obj_ids)
             }
-            for out_frame_idx, out_obj_ids, out_mask_logits in self.predictor.propagate_in_video(
-                self.inference_state
-            )
-        }
+
+        for (
+            out_frame_idx,
+            out_obj_ids,
+            out_mask_logits,
+        ) in self.predictor.propagate_in_video(self.inference_state, reverse=True):
+            video_segments[out_frame_idx] = {
+                out_obj_id: (out_mask_logits[i] > 0.0).cpu().numpy()
+                for i, out_obj_id in enumerate(out_obj_ids)
+            }
 
         for frame_idx, masks in video_segments.items():
             apply_mask_pil(

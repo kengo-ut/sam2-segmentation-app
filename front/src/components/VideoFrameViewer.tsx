@@ -25,6 +25,7 @@ const VideoFrameViewer: React.FC<VideoFrameViewerProps> = ({
   const [effect, setEffect] =
     useState<keyof typeof PropagatePromptsApiSegmentationPropagatePostEffect>("color");
   const [open, setOpen] = useState(false);
+  const [canPropagate, setCanPropagate] = useState(false);
 
   // Custom hooks
   const {
@@ -53,7 +54,15 @@ const VideoFrameViewer: React.FC<VideoFrameViewerProps> = ({
 
   // API operations
   const { handleApplyPrompts, handlePropagatePrompts, handleResetState, handleExportVideo } =
-    useAPIOperations(prompts, effect, setIsProcessing, setImageVersion, setImageLoaded);
+    useAPIOperations(
+      prompts,
+      effect,
+      setIsProcessing,
+      setImageVersion,
+      setImageLoaded,
+      setPrompts,
+      setCanPropagate
+    );
 
   return (
     <div className="flex flex-col gap-4">
@@ -97,6 +106,7 @@ const VideoFrameViewer: React.FC<VideoFrameViewerProps> = ({
             setEffect={setEffect}
             open={open}
             setOpen={setOpen}
+            canPropagate={canPropagate}
           />
 
           <DataAndStatsTabPanel

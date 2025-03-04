@@ -1,5 +1,5 @@
 import React from "react";
-import { Download, ChevronsUpDown, Brush, FastForward, RotateCcw, Info } from "lucide-react";
+import { Download, ChevronsUpDown, RotateCcw, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PropagatePromptsApiSegmentationPropagatePostEffect, Prompt } from "@/gen/schema";
@@ -11,6 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { GiDroplets, GiDropletSplash } from "react-icons/gi";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -27,6 +28,7 @@ interface SegmentationControlsCardProps {
   >;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  canPropagate: boolean;
 }
 
 const SegmentationControlsCard: React.FC<SegmentationControlsCardProps> = ({
@@ -40,6 +42,7 @@ const SegmentationControlsCard: React.FC<SegmentationControlsCardProps> = ({
   setEffect,
   open,
   setOpen,
+  canPropagate,
 }) => {
   return (
     <Card>
@@ -53,13 +56,17 @@ const SegmentationControlsCard: React.FC<SegmentationControlsCardProps> = ({
             disabled={isProcessing || prompts.length === 0}
             className="gap-2"
           >
-            <Brush className="w-4 h-4" />
+            <GiDroplets className="w-4 h-4" />
             Apply Prompts
           </Button>
 
-          <Button onClick={handlePropagatePrompts} disabled={isProcessing} className="gap-2">
-            <FastForward className="w-4 h-4" />
-            Propagate Forward
+          <Button
+            onClick={handlePropagatePrompts}
+            disabled={isProcessing || !canPropagate}
+            className="gap-2"
+          >
+            <GiDropletSplash className="w-4 h-4" />
+            Propagate Prompts
           </Button>
 
           <Button
