@@ -31,7 +31,7 @@ const FrameNavigation: React.FC<FrameNavigationProps> = ({
           setImageLoaded(false);
         }}
       />
-      <div className="flex items-center gap-20">
+      <div className="flex flex-col md:flex-row items-center gap-x-20 gap-y-2">
         <div className="flex items-center gap-2">
           <Button
             onClick={() => {
