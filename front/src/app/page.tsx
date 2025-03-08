@@ -17,12 +17,14 @@ export default function VideoAnnotationPage() {
   const [numFrames, setNumFrames] = useState(0);
   const [requestedWidth, setRequestedWidth] = useState(640);
   const [requestedHeight, setRequestedHeight] = useState(360);
+  const [isLoading, setIsLoading] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     if (filename.trim()) {
       const params: InitializeVideoApiSegmentationInitializePostParams = {
         filename,
@@ -34,6 +36,7 @@ export default function VideoAnnotationPage() {
       setNumFrames(videoInfo.num_frames);
       setIsViewerActive(true);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -77,7 +80,7 @@ export default function VideoAnnotationPage() {
               type="submit"
               onClick={handleSubmit}
               className="gap-2"
-              disabled={!filename.trim()}
+              disabled={!filename.trim() || isLoading}
             >
               <Play className="h-4 w-4" />
               Start Viewer
