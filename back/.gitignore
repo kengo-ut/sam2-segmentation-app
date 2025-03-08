@@ -4,20 +4,8 @@ __pycache__
 .venv
 .envrc
 
-# data files
-data/*
-
 # generated files
 openapi.json
 
 # checkpoints
-checkpoints/*
-
-# configs
-configs/*
-
-# checkpoints
-checkpoints/*
-
-# submodules
-submodules/*
+checkpoints/*.pt

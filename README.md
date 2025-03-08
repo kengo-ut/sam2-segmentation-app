@@ -34,67 +34,66 @@ SAM2 Segmentation App は、SAM2（セグメンテーション手法）を活用
 
 ### back
 
-1. `back/.envrc`ファイルを作成し、必要な環境変数を設定する
-
-2. `back/data/`配下に必要なデータを配置する
-
-   - `back/submodules`配下に sam2 のリポジトリを配置する
-   - `back/checkpoints`配下に`sam2.1_hiera_large.pt`を配置する
-   - `back/configs/sam2.1`配下に`sam2.1_hiera_l.yaml`を配置する
-
-3. `back`ディレクトリで以下のコマンドを実行し、依存パッケージをインストールする
+1. `back`ディレクトリに移動する
 
    ```bash
-   uv sync
+   cd back
    ```
 
-4. `back`ディレクトリで以下のコマンドを実行し、開発サーバーを立ち上げる
+2. 以下のコマンドを実行し、依存パッケージをインストールする
+
    ```bash
-   . .venv/bin/activate
+   ./setup.sh
+   ```
+
+3. `direnv`を使用して`.envrc`ファイルを作成し、以下の環境変数を設定する (xxx は適切なパスに置き換える)
+
+   ```
+   export PYTHONPATH=/xxx/sam2-segmentation-app/back/api
+   export PUBLIC_DIR=/xxx/sam2-segmentation-app/front/public
+   ```
+
+4. 以下のコマンドを実行し、開発サーバーを立ち上げる
+   ```bash
    make dev
    ```
 
 ### front
 
-5. `front`で使用する Node.js と Yarn のバージョンを設定する
+1. `front`ディレクトリに移動する
 
    ```bash
-   # 初回（package.jsonへ固定）
-   volta pin node@20.15.0
-   volta pin yarn@4.3.1
+   cd front
+   ```
 
-   # 以降（package.jsonから指定）
+2. [Volta](https://volta.sh/) を使用して Node.js と Yarn をインストールする
+
+   ```bash
    volta install node
    volta install yarn
    ```
 
-6. `front`ディレクトリで以下のコマンドを実行し、依存パッケージをインストールする
+3. 以下のコマンドを実行し、依存パッケージをインストールする
 
    ```bash
    yarn
    ```
 
-7. `front`ディレクトリで以下のコマンドを実行し、Schema・API クライアントを生成
-
-   ```bash
-   yarn gen
-   ```
-
-8. `front`ディレクトリで、以下の環境変数ファイル`front/.env.local`を作成する
+4. 環境変数ファイル`.env.local`を作成し、以下の環境変数を設定する
 
    ```
    NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
    ```
 
-9. `/front/public/videos`配下に mp4 ファイルを配置する
+5. `public/videos`配下に mp4 ファイルを配置する
 
-10. `front`ディレクトリで以下のコマンドを実行し、開発サーバーを立ち上げる
+6. 以下のコマンドを実行し、開発サーバーを立ち上げる
 
-    ```bash
-    yarn dev
-    ```
+   ```bash
+   yarn dev
+   ```
 
-11. [http://localhost:3000](http://localhost:3000)へアクセスしてページが表示されれば OK
+7. [http://localhost:3000](http://localhost:3000)へアクセスしてページが表示されれば OK
 
 ## TODOs
 
