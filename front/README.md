@@ -21,7 +21,7 @@ yarn
 
 環境変数ファイル`.env.local`を作成し、以下の環境変数を設定する
 
-```bash
+```
 NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
 ```
 

@@ -46,11 +46,11 @@ SAM2 Segmentation App は、SAM2（セグメンテーション手法）を活用
    ./setup.sh
    ```
 
-3. `direnv`を使用して`.envrc`ファイルを作成し、以下の環境変数を設定する (xxx は適切なパスに置き換える)
+3. `direnv`を使用して`.envrc`ファイルを作成し、以下の環境変数を設定する (xxxxx は適切なパスに置き換える)
 
    ```
-   export PYTHONPATH=/xxx/sam2-segmentation-app/back/api
-   export PUBLIC_DIR=/xxx/sam2-segmentation-app/front/public
+   export PYTHONPATH=/xxxxx/sam2-segmentation-app/back/api
+   export PUBLIC_DIR=/xxxxx/sam2-segmentation-app/front/public
    ```
 
 4. 以下のコマンドを実行し、開発サーバーを立ち上げる
@@ -97,6 +97,10 @@ SAM2 Segmentation App は、SAM2（セグメンテーション手法）を活用
 
 ## TODOs
 
-- [ ] Implementation for MPS (CPU) Devices (Currently only supports CUDA)
+- [x] Implement the function to apply prompts temporarily
+- [x] Implement the function to propagate prompts to forward frames
+- [x] Implement the function to export the segmented video
+- [x] Implement the function to propagate prompts to all frames
+- [ ] Implement functions for MPS (CPU) devices
 - [ ] Clean the code further
-- [x] Both directions of prompt propagation
+
