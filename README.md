@@ -28,7 +28,7 @@ SAM2 Segmentation App は、SAM2（セグメンテーション手法）を活用
 
 ## デモ画像
 
-![demo](/images/demo.png)
+![demo](/assets/demo.png)
 
 ## 環境構築
 
